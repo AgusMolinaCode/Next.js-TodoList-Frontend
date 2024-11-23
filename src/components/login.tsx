@@ -31,6 +31,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema | typeof registerSchema>) {
+    console.log("Username:", values.username);
+    console.log("Password:", values.password);
+
     try {
       if (isLogin) {
         const token = await Login(values);
@@ -81,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
