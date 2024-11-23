@@ -59,7 +59,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       }
       form.reset();
     } catch (error) {
-      
       if (error instanceof Error) {
         setErrorMessage(error.message || "An error occurred");
       } else {

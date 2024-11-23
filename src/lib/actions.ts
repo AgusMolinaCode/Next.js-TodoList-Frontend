@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 
+const BASE_URL = "https://golang-mongodb-production.up.railway.app";
+
 export async function Login(values: { username: string; password: string }) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/login`, {
+    const response = await fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +28,7 @@ export async function Login(values: { username: string; password: string }) {
 
 export async function Register(values: { username: string; password: string }) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/register`, {
+    const response = await fetch(`${BASE_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,17 +64,16 @@ async function fetchWithAuth(url: string, token: string, options: RequestInit = 
 
 export async function GetTodos(token: string) {
   try {
-    const data = await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL}/todos`, token);
+    const data = await fetchWithAuth(`${BASE_URL}/todos`, token);
     return data;
   } catch (error) {
     console.error("Error fetching todos:", error);
   }
-  
 }
 
 export async function createTodo(token: string, values: { title: string; completed: boolean }) {
   try {
-    const data = await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL}/todos`, token, {
+    const data = await fetchWithAuth(`${BASE_URL}/todos`, token, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +89,7 @@ export async function createTodo(token: string, values: { title: string; complet
 export async function DeleteTodoById(token: string, formData: FormData) {
   const id = formData.get("id") as string;
   try {
-    const data = await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL}/todos/${id}`, token, {
+    const data = await fetchWithAuth(`${BASE_URL}/todos/${id}`, token, {
       method: "DELETE",
     });
     revalidatePath("/");
@@ -98,11 +99,9 @@ export async function DeleteTodoById(token: string, formData: FormData) {
   }
 }
 
-
-
 export async function updateTodo(token: string, id: string, values: { title: string; completed: boolean }) {
   try {
-    const data = await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL}/todos/${id}`, token, {
+    const data = await fetchWithAuth(`${BASE_URL}/todos/${id}`, token, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
