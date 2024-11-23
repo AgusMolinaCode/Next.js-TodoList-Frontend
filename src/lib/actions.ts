@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 export async function Login(values: { username: string; password: string }) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/login`, {
+    const response = await fetch(`https://golang-mongodb-production.up.railway.app/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export async function Login(values: { username: string; password: string }) {
 
 export async function Register(values: { username: string; password: string }) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/register`, {
+    const response = await fetch(`https://golang-mongodb-production.up.railway.app/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
