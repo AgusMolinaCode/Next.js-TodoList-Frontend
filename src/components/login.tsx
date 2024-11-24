@@ -31,38 +31,33 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema | typeof registerSchema>) {
-
     try {
       if (isLogin) {
         const token = await Login(values);
         if (token && token.token) {
           onLogin(token.token);
-          setErrorMessage(null); // Clear any previous error messages
-          router.push(`/todos?token=${token.token}`); // Redirect to /todos with token as query parameter
+          setErrorMessage(null);
+          router.push(`/todos?token=${token.token}`);
         } else {
-          setErrorMessage("Invalid username or password");
-          setTimeout(() => setErrorMessage(null), 5000); // Clear error message after 5 seconds
+          setErrorMessage("Usuario o contraseña incorrectos");
+          setTimeout(() => setErrorMessage(null), 3000);
         }
       } else {
         const response = await Register(values);
         if (response && response.success) {
-          setIsLogin(true); // Switch to login form after successful registration
-          setErrorMessage(null); // Clear any previous error messages
-          setSuccessMessage("User registered successfully");
-          setTimeout(() => setSuccessMessage(null), 5000); // Clear success message after 5 seconds
+          setIsLogin(true);
+          setErrorMessage(null);
+          setSuccessMessage("Usuario creado correctamente");
+          setTimeout(() => setSuccessMessage(null), 3000);
         } else {
-          setErrorMessage("Registration failed");
-          setTimeout(() => setErrorMessage(null), 5000); // Clear error message after 5 seconds
+          setErrorMessage("Error al crear el usuario");
+          setTimeout(() => setErrorMessage(null), 3000);
         }
       }
       form.reset();
     } catch (error) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message || "An error occurred");
-      } else {
-        setErrorMessage("An error occurred");
-      }
-      setTimeout(() => setErrorMessage(null), 5000); // Clear error message after 5 seconds
+      setErrorMessage("Ocurrió un error, por favor intenta nuevamente");
+      setTimeout(() => setErrorMessage(null), 3000);
     }
   }
 
