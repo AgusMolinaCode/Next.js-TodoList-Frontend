@@ -5,10 +5,23 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Login, Register } from "@/lib/actions";
-import { Card, CardHeader, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { loginSchema, registerSchema } from "@/lib/zodSchema";
 import { useRouter } from "next/navigation";
 
@@ -30,7 +43,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema | typeof registerSchema>) {
+  async function onSubmit(
+    values: z.infer<typeof loginSchema | typeof registerSchema>
+  ) {
     try {
       if (isLogin) {
         const token = await Login(values);
@@ -55,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         }
       }
       form.reset();
-    } catch (error) {
+    } catch {
       setErrorMessage("Ocurrió un error, por favor intenta nuevamente");
       setTimeout(() => setErrorMessage(null), 3000);
     }
@@ -107,7 +122,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       </CardContent>
       <CardFooter>
         <Button variant="link" onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+          {isLogin
+            ? "Don't have an account? Register"
+            : "Already have an account? Login"}
         </Button>
       </CardFooter>
     </Card>
