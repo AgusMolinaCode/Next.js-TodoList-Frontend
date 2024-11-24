@@ -31,8 +31,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema | typeof registerSchema>) {
-    console.log("Username:", values.username);
-    console.log("Password:", values.password);
 
     try {
       if (isLogin) {
