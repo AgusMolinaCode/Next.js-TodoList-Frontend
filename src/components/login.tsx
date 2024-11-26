@@ -54,7 +54,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           setErrorMessage(null);
           router.push(`/todos?token=${token.token}`);
         } else {
-          setErrorMessage("Usuario o contraseña incorrecto");
+          setErrorMessage("Usuario o contraseña incorrectos");
           setTimeout(() => setErrorMessage(null), 3000);
         }
       } else {
