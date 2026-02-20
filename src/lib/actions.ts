@@ -16,11 +16,17 @@ interface AuthResponse {
 }
 
 interface Todo {
+  /** Unique identifier for the todo item */
   id: string;
+  /** Title or description of the todo */
   title: string;
+  /** Whether the todo is completed */
   completed: boolean;
+  /** ID of the user who owns this todo */
   userId: string;
+  /** ISO timestamp when the todo was created */
   createdAt: string;
+  /** ISO timestamp when the todo was last updated */
   updatedAt: string;
 }
 
