@@ -16,19 +16,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Edit2Icon } from "lucide-react";
 import { Todo } from "@/types/todo";
+import { TodoFormFields } from "./TodoFormFields";
 
 interface EditTodoModalProps {
   token: string;
@@ -73,44 +64,7 @@ const EditTodoModal: React.FC<EditTodoModalProps> = ({ token, todo, onTodoUpdate
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your todo title" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Your title must be between 2 and 50 characters.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="completed"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      name={field.name}
-                      ref={field.ref}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>Completed</FormLabel>
-                    <FormDescription>
-                      Mark this todo as already completed
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              )}
-            />
+            <TodoFormFields form={form} />
             <DialogFooter>
               <Button type="submit" className="w-full">
                 <Edit2Icon className="mr-2 h-4 w-4" />
