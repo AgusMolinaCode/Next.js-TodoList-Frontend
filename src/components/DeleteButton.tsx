@@ -13,7 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Trash2 } from 'lucide-react';
+import { AlertCircle, Trash2 } from 'lucide-react';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface DeleteButtonProps extends ButtonProps {
   token: string;
@@ -22,14 +23,31 @@ interface DeleteButtonProps extends ButtonProps {
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ id, token, onTodoDeleted }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDelete = async () => {
-    const formData = new FormData();
-    formData.append("id", id);
-    await DeleteTodoById(token, formData);
-    const fetchedTodos = await GetTodos(token);
-    setIsOpen(false);
-    onTodoDeleted(fetchedTodos); // Pass the fetched todos to the parent component
+    setIsDeleting(true);
+    setError(null);
+    
+    try {
+      const formData = new FormData();
+      formData.append("id", id);
+      
+      const result = await DeleteTodoById(token, formData);
+      
+      if (!result) {
+        throw new Error("Failed to delete todo");
+      }
+      
+      const fetchedTodos = await GetTodos(token);
+      setIsOpen(false);
+      onTodoDeleted(fetchedTodos || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -47,12 +65,18 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ id, token, onTodoDeleted })
             Are you sure you want to delete this todo? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setIsOpen(false)}>
+        {error && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+        <DialogFooter className="mt-4">
+          <Button variant="outline" onClick={() => setIsOpen(false)} disabled={isDeleting}>
             Cancel
           </Button>
-          <Button variant="destructive" onClick={handleDelete}>
-            Delete
+          <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+            {isDeleting ? "Deleting..." : "Delete"}
           </Button>
         </DialogFooter>
       </DialogContent>
