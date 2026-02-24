@@ -17,9 +17,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Edit2Icon, AlertCircle } from "lucide-react";
+import { Edit2Icon } from "lucide-react";
 import { Todo } from "@/types/todo";
 import { TodoFormFields } from "./TodoFormFields";
+import { ErrorAlert } from "./ErrorAlert";
 
 interface EditTodoModalProps {
   token: string;
@@ -71,12 +72,7 @@ const EditTodoModal: React.FC<EditTodoModalProps> = ({ token, todo, onTodoUpdate
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                <span className="text-sm">{error}</span>
-              </div>
-            )}
+            {error && <ErrorAlert message={error} />}
             <TodoFormFields form={form} />
             <DialogFooter>
               <Button type="submit" className="w-full">
