@@ -26,7 +26,7 @@ function formatDate(dateString: string | undefined): string {
 }
 
 /**
- * Verifica si un todo fue editado (createdAt != updatedAt)
+ * Verifica si un todo fue editado (created_at !== updated_at)
  */
 function isEdited(todo: Todo): boolean {
   if (!todo.created_at || !todo.updated_at) return false;

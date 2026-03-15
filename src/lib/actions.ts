@@ -25,9 +25,9 @@ interface Todo {
   /** ID of the user who owns this todo */
   userId: string;
   /** ISO timestamp when the todo was created */
-  createdAt: string;
+  created_at: string;
   /** ISO timestamp when the todo was last updated */
-  updatedAt: string;
+  updated_at: string;
 }
 
 interface ApiError {
